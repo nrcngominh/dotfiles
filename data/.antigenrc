@@ -1,0 +1,16 @@
+########### DO NOT CHANGE THE ORDER OF LINES ###############
+# Load oh-my-zsh
+antigen use oh-my-zsh
+
+# Load bundles from default repo
+antigen bundle git
+
+# Load bundles from external repos
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-syntax-highlighting
+
+# Load the theme
+antigen theme romkatv/powerlevel10k
+
+# Apply configuration
+antigen apply

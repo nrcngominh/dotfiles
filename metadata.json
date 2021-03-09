@@ -1,0 +1,9 @@
+[
+  ".zshrc",
+  ".antigenrc",
+  ".tmux.conf",
+  ".p10k.zsh",
+  ".alacritty.yml",
+  ".dircolors",
+  ".local/share/fonts/"
+]
