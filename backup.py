@@ -6,7 +6,7 @@ import sys
 import os
 
 JSON_FILE = "metadata.json"
-STORE = "data"
+SRC = "src"
 HOME = os.path.expanduser("~")
 
 
@@ -49,7 +49,7 @@ def backup():
         data = json.load(jsonFile)
 
     for entry in data:
-        copy(entry, HOME, STORE)
+        copy(entry, HOME, SRC)
 
 if __name__ == '__main__':
     backup()
