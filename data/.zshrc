@@ -1,23 +1,6 @@
 #################### Run bash if in text console ###########
 [ "$TERM" = "linux" ] && exec /usr/bin/env bash
 
-################### Automatically start tmux ###############
-if command -v tmux > /dev/null; then
-    # Prevent infinitive loop of zsh and tmux
-    if [ -z "$TMUX" ] && [ -t 0 ]; then
-        # Set $TERM
-        export TERM=xterm-256color
-
-        # Get tmux sessions
-        session=$(tmux 2> /dev/null ls -F \
-        '#{session_attached} #{?#{==:#{session_last_attached},},1,#{session_last_attached}} #{session_id}' |
-        awk '/^0/ { if ($2 > t) { t = $2; s = $3 } }; END { if (s) printf "%s", s }')
-
-        # Attach the last session if not attached or create a new one
-        [ -n "$session" ] && exec tmux attach -t "$session" || exec tmux
-    fi
-fi 
-
 #################### Powerlevel10k instant prompt ##########
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
@@ -46,18 +29,8 @@ export LESS_TERMCAP_se=$'\E[0m'         # Exit standout
 [ -f ~/.dircolors ] && eval "$(dircolors ~/.dircolors)"
 
 # Set editor for "sudoedit"
-export EDITOR="/usr/bin/env nvim"
-
-# Load fzf config
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export EDITOR="/usr/bin/env vim"
 
 #################### Key bindings ##########################
 # Use "Ctrl+\" to accept zsh-autosuggestions
 bindkey "^\\" autosuggest-accept
-
-#################### Aliases ###############################
-# Use neovim instead of vim 
-alias vim="nvim"
-
-# Quick edit neovim configuration
-alias ev="vim ${HOME}/.config/nvim/init.vim"

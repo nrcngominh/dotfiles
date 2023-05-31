@@ -44,25 +44,12 @@ def copy(entry, srcRoot, dstRoot):
             print("FAILED: " + src + " ->", e)
 
 
-def backup(data):
-    for entry in data:
-        copy(entry, HOME, STORE)
-
-
-def restore(data):
-    for entry in data:
-        copy(entry, STORE, HOME)
-
-
-if __name__ == '__main__':
+def backup():
     with open(JSON_FILE) as jsonFile:
         data = json.load(jsonFile)
 
-    if len(sys.argv) == 1:
-        print("backup|restore")
-    elif sys.argv[1] == "backup":
-        backup(data)
-    elif sys.argv[1] == "restore":
-        restore(data)
-    else:
-        print("Invalid command")
+    for entry in data:
+        copy(entry, HOME, STORE)
+
+if __name__ == '__main__':
+    backup()
