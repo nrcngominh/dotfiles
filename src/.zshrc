@@ -1,8 +1,16 @@
 #################### Run bash if in text console ###########
-[ "$TERM" = "linux" ] && exec /usr/bin/env bash
+if [ "$TERM" = "linux" ]; then
+    exec /usr/bin/env bash
+fi
 
 #################### Automatically start tmux ##############
-[ -z "$TMUX"  ] && { tmux attach || exec tmux new-session; }
+if [[ -z "$TMUX" ]]; then
+    if tmux has-session 2>/dev/null; then
+        exec tmux attach
+    else
+        exec tmux
+    fi
+fi
 
 #################### Powerlevel10k instant prompt ##########
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
@@ -13,10 +21,14 @@ fi
 if [ -f ~/.antigen.zsh ]; then
     # Load antigen
     source ~/.antigen.zsh
+
     # Load bundles (oh-my-zsh, plugins, themes)
     antigen init ~/.antigenrc
+
     # Load powerlevel10k config (by "p10k configure")
-    [ -f ~/.p10k.zsh ] && source ~/.p10k.zsh
+    if [ -f ~/.p10k.zsh ]; then
+        source ~/.p10k.zsh
+    fi
 fi
 
 #################### Preferences ###########################
@@ -29,7 +41,9 @@ export LESS_TERMCAP_so=$'\E[1;30;45m'   # Standout
 export LESS_TERMCAP_se=$'\E[0m'         # Exit standout
 
 # Colors for "ls" command
-[ -f ~/.dircolors ] && eval "$(dircolors ~/.dircolors)"
+if [ -f ~/.dircolors ]; then
+    eval "$(dircolors ~/.dircolors)"
+fi
 
 # Set editor for "sudoedit"
 export EDITOR="/usr/bin/env vim"
