@@ -1,6 +1,9 @@
 #################### Run bash if in text console ###########
 [ "$TERM" = "linux" ] && exec /usr/bin/env bash
 
+#################### Automatically start tmux ##############
+[ -z "$TMUX"  ] && { tmux attach || exec tmux new-session; }
+
 #################### Powerlevel10k instant prompt ##########
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
