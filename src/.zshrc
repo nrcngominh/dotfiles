@@ -10,9 +10,9 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 #################### Initialize zsh ########################
-if [ -f /opt/antigen.zsh ]; then
+if [ -f ~/.antigen.zsh ]; then
     # Load antigen
-    source /opt/antigen.zsh
+    source ~/.antigen.zsh
     # Load bundles (oh-my-zsh, plugins, themes)
     antigen init ~/.antigenrc
     # Load powerlevel10k config (by "p10k configure")
