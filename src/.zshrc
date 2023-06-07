@@ -3,12 +3,19 @@ if [ "$TERM" = "linux" ]; then
     exec /usr/bin/env bash
 fi
 
+#################### Detect intergrated terminal ###########
+
+export TERM_INTEGRATED=0
+[ "$TERM_PROGRAM" = "vscode" ] && export TERM_INTEGRATED=1
+
 #################### Automatically start tmux ##############
-if [[ -z "$TMUX" ]]; then
-    if tmux has-session 2>/dev/null; then
-        exec tmux attach
-    else
-        exec tmux
+if [ $TERM_INTEGRATED = 0 ]; then 
+    if [[ -z "$TMUX" ]]; then
+        if tmux has-session 2>/dev/null; then
+            exec tmux attach
+        else
+            exec tmux
+        fi
     fi
 fi
 
