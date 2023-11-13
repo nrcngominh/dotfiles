@@ -10,8 +10,10 @@ export TERM_INTEGRATED=0
 
 #################### Automatically start tmux ##############
 if [ $TERM_INTEGRATED = 0 ]; then 
-    if [[ -z "$TMUX" ]]; then
-        if tmux has-session 2>/dev/null; then
+    ENABLED_TMUX_ATTACH=0
+
+    if [[ -z "$TMUX" ]];  then
+        if tmux has-session 2>/dev/null && [ $ENABLED_TMUX_ATTACH = 1 ]; then
             exec tmux attach
         else
             exec tmux
@@ -58,3 +60,10 @@ export EDITOR="/usr/bin/env vim"
 #################### Key bindings ##########################
 # Use "Ctrl+\" to accept zsh-autosuggestions
 bindkey "^\\" autosuggest-accept
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+alias rm="trash"
+alias vim="nvim"
